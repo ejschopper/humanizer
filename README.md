@@ -1,6 +1,13 @@
 # Humanizer
 
-A skill for Claude Code and OpenCode that removes signs of AI-generated writing from text, making it sound more natural and human.
+A Claude Code and OpenCode skill for turning AI-sounding text into plain, specific, human writing.
+
+Humanizer does two jobs:
+
+1. Removes common AI-writing tells.
+2. Rebuilds the draft using plain English rules: active voice, concrete language, observed detail, brevity, and common punctuation.
+
+The default style is direct, practical, and clear. The final output avoids em dashes and en dashes. It prefers common punctuation: `.`, `,`, `:`, `;`, and `-`.
 
 ## Installation
 
@@ -10,7 +17,7 @@ Clone directly into Claude Code's skills directory:
 
 ```bash
 mkdir -p ~/.claude/skills
-git clone https://github.com/blader/humanizer.git ~/.claude/skills/humanizer
+git clone https://github.com/ejschopper/humanizer.git ~/.claude/skills/humanizer
 ```
 
 Or copy the skill file manually if you already have this repo cloned:
@@ -26,7 +33,7 @@ Clone directly into OpenCode's skills directory:
 
 ```bash
 mkdir -p ~/.config/opencode/skills
-git clone https://github.com/blader/humanizer.git ~/.config/opencode/skills/humanizer
+git clone https://github.com/ejschopper/humanizer.git ~/.config/opencode/skills/humanizer
 ```
 
 Or copy the skill file manually if you already have this repo cloned:
@@ -36,13 +43,13 @@ mkdir -p ~/.config/opencode/skills/humanizer
 cp SKILL.md ~/.config/opencode/skills/humanizer/
 ```
 
-> **Note:** OpenCode also scans `~/.claude/skills/` for compatibility, so if you use both tools, a single clone into `~/.claude/skills/humanizer/` is enough.
+> Note: OpenCode also scans `~/.claude/skills/` for compatibility, so if you use both tools, a single clone into `~/.claude/skills/humanizer/` is enough.
 
 ## Usage
 
 ### Claude Code
 
-```
+```text
 /humanizer
 
 [paste your text here]
@@ -50,151 +57,141 @@ cp SKILL.md ~/.config/opencode/skills/humanizer/
 
 ### OpenCode
 
-```
+```text
 /humanizer
 
 [paste your text here]
 ```
 
-Or ask the model to humanize text directly in either tool:
+Or ask the model to humanize text directly:
 
-```
+```text
 Please humanize this text: [your text]
 ```
 
-### Voice Calibration
+## Voice calibration
 
-To match your personal writing style, provide a sample of your own writing:
+To match a personal writing style, provide a sample:
 
-```
+```text
 /humanizer
 
-Here's a sample of my writing for voice matching:
-[paste 2-3 paragraphs of your own writing]
+Here is a sample of my writing for voice matching:
+[paste 2-3 paragraphs]
 
 Now humanize this text:
-[paste AI text to humanize]
+[paste AI text]
 ```
 
-The skill will analyze your sentence rhythm, word choices, and quirks, then apply them to the rewrite instead of producing generic "clean" output.
+The skill will analyze sentence rhythm, word choice, paragraph habits, and punctuation. It will still apply the default punctuation policy unless you explicitly ask otherwise.
 
-## Overview
+## What changed in v3
 
-Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) guide, maintained by WikiProject AI Cleanup. This comprehensive guide comes from observations of thousands of instances of AI-generated text.
+Version 3 shifts Humanizer from an AI-detector cleanup prompt into a plain English editing skill.
 
-The skill also includes a final "obviously AI generated" audit pass and a second rewrite, to catch lingering AI-isms in the first draft.
+It now includes:
 
-### Key Insight from Wikipedia
+- A strict no em dash and no en dash final audit.
+- A common-punctuation policy: `.`, `,`, `:`, `;`, and `-`.
+- Active voice rules.
+- Positive-form rules.
+- Concrete-language rules.
+- Omit-needless-words rules.
+- Observation-before-interpretation rules.
+- Specific-detail-over-abstraction rules.
+- Theatrical punctuation and fake-candid opener detection.
+- Practical writing defaults for emails, documentation, technical notes, incident reviews, PRDs, and architecture reviews.
 
-> "LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases."
+## Pattern categories
 
-## 33 Patterns Detected (with Before/After Examples)
+### AI writing tells
 
-### Content Patterns
+- Significance inflation.
+- Promotional language.
+- Superficial `-ing` analysis.
+- Vague attribution.
+- Formulaic challenges and future outlook.
+- AI vocabulary clusters.
+- Copula avoidance.
+- Rule of three overuse.
+- Synonym cycling.
+- False ranges.
+- Chatbot artifacts.
+- Sycophantic tone.
+- Generic conclusions.
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 1 | **Significance inflation** | "marking a pivotal moment in the evolution of..." | "was established in 1989 to collect regional statistics" |
-| 2 | **Notability name-dropping** | "cited in NYT, BBC, FT, and The Hindu" | "In a 2024 NYT interview, she argued..." |
-| 3 | **Superficial -ing analyses** | "symbolizing... reflecting... showcasing..." | Remove or expand with actual sources |
-| 4 | **Promotional language** | "nestled within the breathtaking region" | "is a town in the Gonder region" |
-| 5 | **Vague attributions** | "Experts believe it plays a crucial role" | "according to a 2019 survey by..." |
-| 6 | **Formulaic challenges** | "Despite challenges... continues to thrive" | Specific facts about actual challenges |
+### Style and cadence tells
 
-### Language Patterns
+- Em dashes and en dashes.
+- Decorative punctuation.
+- Boldface overuse.
+- Inline-header lists.
+- Title Case headings.
+- Emojis.
+- Curly quotes.
+- Hyphenated word pair overuse.
+- Persuasive authority tropes.
+- Signposting announcements.
+- Fragmented headers.
+- Diff-anchored writing.
+- Manufactured punchlines.
+- Aphorism formulas.
+- Conversational rhetorical openers.
+- Theatrical punctuation.
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 7 | **AI vocabulary** | "Actually... additionally... testament... landscape... showcasing" | "also... remain common" |
-| 8 | **Copula avoidance** | "serves as... features... boasts" | "is... has" |
-| 9 | **Negative parallelisms / tailing negations** | "It's not just X, it's Y", "..., no guessing" | State the point directly |
-| 10 | **Rule of three** | "innovation, inspiration, and insights" | Use natural number of items |
-| 11 | **Synonym cycling** | "protagonist... main character... central figure... hero" | "protagonist" (repeat when clearest) |
-| 12 | **False ranges** | "from the Big Bang to dark matter" | List topics directly |
-| 13 | **Passive voice / subjectless fragments** | "No configuration file needed" | Name the actor when it helps clarity |
+### Plain English rewrite rules
 
-### Style Patterns
+- Use active voice when the actor matters.
+- Put statements in positive form.
+- Use definite, specific, concrete language.
+- Omit needless words.
+- Keep related words together.
+- Put emphasis at the end when useful.
+- Write with nouns and verbs.
+- Do not overwrite.
+- Do not overstate.
+- Avoid empty qualifiers.
+- Be clear.
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 14 | **Em/en dashes** | "institutions—not the people—yet this continues—" | Cut them: periods, commas, colons, or parentheses |
-| 15 | **Boldface overuse** | "**OKRs**, **KPIs**, **BMC**" | "OKRs, KPIs, BMC" |
-| 16 | **Inline-header lists** | "**Performance:** Performance improved" | Convert to prose |
-| 17 | **Title Case Headings** | "Strategic Negotiations And Partnerships" | "Strategic negotiations and partnerships" |
-| 18 | **Emojis** | "🚀 Launch Phase: 💡 Key Insight:" | Remove emojis |
-| 19 | **Curly quotes** | `said “the project”` | `said “the project”` |
-| 26 | **Hyphenated word pairs** | “cross-functional, data-driven, client-facing” | Drop hyphens on common word pairs |
-| 27 | **Persuasive authority tropes** | "At its core, what matters is..." | State the point directly |
-| 28 | **Signposting announcements** | "Let's dive in", "Here's what you need to know" | Start with the content |
-| 29 | **Fragmented headers** | "## Performance" + "Speed matters." | Let the heading do the work |
-| 30 | **Diff-anchored writing** | "This function was added to replace..." | Describe what it does, not what changed |
-| 31 | **Manufactured punchlines / staccato drama** | "It had no preference. No prior. No nostalgia." | Use varied sentence lengths and concrete claims |
-| 32 | **Aphorism formulas** | "Symmetry is the language of trust" | Replace the formula with the actual claim |
-| 33 | **Conversational rhetorical openers** | "Honestly? It depends..." | Remove the fake-candid setup |
+### Observation-first rules
 
-### Communication Patterns
+- Say what happened before explaining what it means.
+- Prefer examples over conclusions.
+- Prefer specific detail over abstract commentary.
+- Prefer evidence over adjectives.
+- Do not perform intelligence. Make the sentence useful.
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 20 | **Chatbot artifacts** | "I hope this helps! Let me know if..." | Remove entirely |
-| 21 | **Cutoff disclaimers** | "While details are limited in available sources..." | Find sources or remove |
-| 22 | **Sycophantic tone** | "Great question! You're absolutely right!" | Respond directly |
+## Full example
 
-### Filler and Hedging
+Before:
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 23 | **Filler phrases** | "In order to", "Due to the fact that" | "To", "Because" |
-| 24 | **Excessive hedging** | "could potentially possibly" | "may" |
-| 25 | **Generic conclusions** | "The future looks bright" | Specific plans or facts |
+> Great question. AI-assisted coding serves as a pivotal moment in the rapidly evolving software development landscape, showcasing how teams can unlock creativity, enhance collaboration, and drive innovation. It is not just about autocomplete. It is about transforming the way developers work. The future looks bright.
 
-## Full Example
+After:
 
-**Before (AI-sounding):**
-> Great question! Here is an essay on this topic. I hope this helps!
->
-> AI-assisted coding serves as an enduring testament to the transformative potential of large language models, marking a pivotal moment in the evolution of software development. In today's rapidly evolving technological landscape, these groundbreaking tools—nestled at the intersection of research and practice—are reshaping how engineers ideate, iterate, and deliver, underscoring their vital role in modern workflows.
->
-> At its core, the value proposition is clear: streamlining processes, enhancing collaboration, and fostering alignment. It's not just about autocomplete; it's about unlocking creativity at scale, ensuring that organizations can remain agile while delivering seamless, intuitive, and powerful experiences to users. The tool serves as a catalyst. The assistant functions as a partner. The system stands as a foundation for innovation.
->
-> Industry observers have noted that adoption has accelerated from hobbyist experiments to enterprise-wide rollouts, from solo developers to cross-functional teams. The technology has been featured in The New York Times, Wired, and The Verge. Additionally, the ability to generate documentation, tests, and refactors showcases how AI can contribute to better outcomes, highlighting the intricate interplay between automation and human judgment.
->
-> - 💡 **Speed:** Code generation is significantly faster, reducing friction and empowering developers.
-> - 🚀 **Quality:** Output quality has been enhanced through improved training, contributing to higher standards.
-> - ✅ **Adoption:** Usage continues to grow, reflecting broader industry trends.
->
-> While specific details are limited based on available information, it could potentially be argued that these tools might have some positive effect. Despite challenges typical of emerging technologies—including hallucinations, bias, and accountability—the ecosystem continues to thrive. In order to fully realize this potential, teams must align with best practices.
->
-> In conclusion, the future looks bright. Exciting times lie ahead as we continue this journey toward excellence. Let me know if you’d like me to expand on any section!
-
-**After (Humanized):**
-> AI coding assistants can speed up the boring parts of the job. They're great at boilerplate: config files and the little glue code you don't want to write. They can also help you sketch a test, but you still have to read it.
->
-> The dangerous part is how confident the suggestions look. I've accepted code that compiled and passed lint, then discovered later it missed the point because I stopped paying attention.
->
-> If you treat it like autocomplete and review every line, it's useful. If you use it to avoid thinking, it will help you ship bugs faster.
->
-> The only real backstop is tests. Without them, you're mostly judging vibes.
+> AI coding assistants can speed up repetitive work: config files, test scaffolds, boilerplate, and small refactors. They are less reliable for architecture and debugging. The risk is that a suggestion can look right, pass lint, and still miss the point. Treat the tool like autocomplete, review every line, and keep tests in place.
 
 ## References
 
-- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) - Primary source
-- [WikiProject AI Cleanup](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_AI_Cleanup) - Maintaining organization
+- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
+- [WikiProject AI Cleanup](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_AI_Cleanup)
+- Strunk and White, `The Elements of Style`
+- Anne Lamott, `Bird by Bird`
 
-## Version History
+## Version history
 
-- **2.8.0** - Added style/cadence patterns #31-33 for manufactured punchlines, aphorism formulas, and conversational rhetorical openers; expanded #20 to catch offer-to-continue chatbot closers. 33 patterns total.
-- **2.7.0** - Added pattern #30 (diff-anchored writing); made em/en dashes a hard cut rather than "overuse"; expanded #21 to cover speculative gap-filling ("maintains a low profile"). 30 patterns total.
-- **2.6.0** - Cleanup pass: consolidated the duplicated workflow sections, gated the personality guidance to content where voice is wanted, removed the model-fingerprinting subsection, and condensed the worked example. No change to the 29 patterns.
-- **2.5.1** - Added a passive-voice / subjectless-fragment rule, raising the total to 29 patterns
-- **2.5.0** - Added patterns for persuasive framing, signposting, and fragmented headers; expanded negative parallelisms to cover tailing negations; tightened wording around em dash overuse; fixed frontmatter wording to use "filler phrases"
-- **2.4.0** - Added voice calibration: match the user's personal writing style from samples
-- **2.3.0** - Added pattern #25: hyphenated word pair overuse
-- **2.2.0** - Added a final "obviously AI generated" audit + second-pass rewrite prompts
-- **2.1.1** - Fixed pattern #18 example (curly quotes vs straight quotes)
-- **2.1.0** - Added before/after examples for all 24 patterns
-- **2.0.0** - Complete rewrite based on raw Wikipedia article content
-- **1.0.0** - Initial release
+- **3.0.0** - Added plain English rewrite rules, observation-first rules, strict common-punctuation policy, no em/en dash final audit, theatrical punctuation detection, and practical writing defaults inspired by Strunk and White and Anne Lamott.
+- **2.8.0** - Added style/cadence patterns for manufactured punchlines, aphorism formulas, and conversational rhetorical openers.
+- **2.7.0** - Added diff-anchored writing and stricter em/en dash handling.
+- **2.6.0** - Consolidated workflow sections and condensed the worked example.
+- **2.5.1** - Added passive voice and subjectless fragment rule.
+- **2.5.0** - Added persuasive framing, signposting, fragmented headers, and tighter filler rules.
+- **2.4.0** - Added voice calibration.
+- **2.3.0** - Added hyphenated word pair overuse.
+- **2.2.0** - Added final AI audit and second-pass rewrite prompt.
+- **2.1.0** - Added before/after examples.
+- **2.0.0** - Rebuilt around Wikipedia's Signs of AI writing.
+- **1.0.0** - Initial release.
 
 ## License
 
