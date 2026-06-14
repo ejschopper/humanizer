@@ -1,6 +1,6 @@
 ---
 name: humanizer
-version: 3.1.0
+version: 3.1.1
 description: |
   Rewrite AI-sounding text into plain, specific, human writing. Use when editing
   prose, documentation, emails, essays, technical notes, or review comments.
@@ -94,6 +94,36 @@ When no sample is provided, use the default voice:
 - Observed over interpreted.
 - Useful over polished.
 
+### Voice interview mode
+
+When the user asks to tune the skill to a personal writing style, run a short writing interview. Ask for 3-5 sentences per answer. Use prompts that reveal different modes of communication:
+
+1. Casual acknowledgment.
+2. Technical explanation.
+3. Pushback or disagreement.
+4. Recommendation.
+5. Problem diagnosis.
+6. Executive summary.
+7. Personal opinion.
+8. Directive to a team.
+
+After each sample, extract durable style traits. Prefer structure, cadence, and communication habits over isolated word choices.
+
+Track these categories:
+
+- Opening pattern.
+- Sentence length.
+- Directness.
+- Use of context before direction.
+- Use of deadlines and next steps.
+- Level of politeness.
+- Technical specificity.
+- Preference for options versus mandates.
+- How the writer assigns ownership.
+- How the writer closes the loop.
+
+Do not overfit from one sample. Treat each answer as another signal.
+
 ### Built-in profiles
 
 #### default
@@ -118,11 +148,66 @@ Narrative, example rich, and specific without fake profundity.
 
 #### everett
 
-No em dashes. No ellipses. No rhetorical openers. Evidence over adjectives. Observation before interpretation. Direct conclusions. Concrete examples. Achievement focused. Technical-manager voice.
+Use this profile for Everett Schopper's preferred writing style.
+
+Hard rules:
+
+- No em dashes.
+- No en dashes.
+- No ellipses.
+- No rhetorical openers.
+- No fake humility.
+- No inspiration voice.
+- Use common punctuation: `.`, `,`, `:`, `;`, and `-`.
+
+Voice traits:
+
+- Direct without being abrupt.
+- Practical and task-oriented.
+- Technical-manager voice.
+- Evidence over adjectives.
+- Observation before interpretation.
+- Context before direction.
+- Direct conclusions.
+- Concrete examples.
+- Achievement focused.
+- Slightly opinionated when supported by evidence.
+- Polite but not overly warm.
+- Low marketing language.
+- Low emotional language.
+- Moderate sentence length.
+
+Communication structure:
+
+1. State the situation.
+2. Explain why it matters.
+3. Give direction.
+4. Allow reasonable implementation flexibility when appropriate.
+5. Define the deliverable.
+6. Define the timeline or next step.
+
+Common Everett patterns:
+
+- Acknowledge receipt of a request.
+- Explain when an issue is complicated and needs review.
+- Set expectations clearly.
+- Ask for time when needed.
+- Assign ownership directly.
+- Prefer outcome over method.
+- Give acceptable options, then ask the recipient to choose the best path.
+- Close the loop with a deadline or expected response.
+
+Example structure:
+
+> I have your request. This is a complicated situation, so I need time to pull together a useful response. Please give me 24 hours and I will get back to you with what I find and the best next step.
+
+Example directive structure:
+
+> We need to shore up the current process. The scripts exist, but they are still being run manually. Take a step back and determine whether cron jobs or Rundeck is the better option. Either approach is fine if it solves the problem cleanly. Please send me the recommended path and next steps by tomorrow before noon.
 
 ## Source principles
 
-This skill combines three editing traditions:
+This skill combines four editing traditions:
 
 1. AI tell removal: remove common LLM patterns such as inflated significance, filler, chatbot artifacts, and generic conclusions.
 2. Plain English composition: use active voice, positive form, definite language, brevity, clear structure, and revision.
@@ -179,5 +264,6 @@ Before returning final text, verify:
 
 ## Version history
 
+- 3.1.1 - Added Voice Interview Mode and expanded the Everett profile with interview-derived traits: acknowledgement, context before direction, ownership, deliverables, deadlines, outcome over method, and practical technical-manager cadence.
 - 3.1.0 - Added Human Communication Architecture, Purpose Layer, Story Before Summary, Achievement Before Responsibility, Benefit Before Label, Example Before Abstraction, Audience-Aware Rewriting, Resume Speak Detection, Audience Mismatch Detection, Built-In Style Profiles, and Everett Profile.
 - 3.0.0 - Added plain English rewrite rules, observation-first rules, strict common-punctuation policy, no em/en dash final audit, theatrical punctuation detection, and practical writing defaults inspired by Strunk and White and Anne Lamott.
