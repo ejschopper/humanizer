@@ -1,6 +1,6 @@
 ---
 name: humanizer
-version: 4.1.0-beta
+version: 4.1.1-beta
 description: |
   Rewrite weak, generic, or AI-sounding text into effective human communication.
   Humanizer v4.1 is an assessment-aware and reasoning-aware writing system. It
@@ -137,9 +137,11 @@ Do not stop after identifying uncertainty.
 
 Build a complete assessment.
 
+Assessment frameworks should remain domain-agnostic whenever possible. Prefer reusable evaluation categories. Use domain-specific factors only when they materially affect the outcome being evaluated.
+
 ### Equipment and manufacturing assessment
 
-Use for printers, scanners, production hardware, capture rigs, machine purchases, and manufacturing workflows.
+Use for production hardware, physical equipment, scanners, printers, capture rigs, vehicles, machine purchases, and manufacturing workflows.
 
 Assess:
 
@@ -149,11 +151,49 @@ Assess:
 - Throughput: can it perform at the required rate under real conditions?
 - Workflow: how much operator involvement is required?
 - Durability: how does it perform over time?
-- Materials: how do ink, substrate, adhesion, curing, and aging behave?
-- Economics: does it improve the business?
+- Operating costs: what does it cost to run, service, maintain, and support?
 - Risk: what could fail?
 - Evidence: what proof exists?
 - Unknowns: what information is still missing?
+- Domain-specific factors: what characteristics of this domain could materially affect performance, quality, reliability, durability, or operational success?
+
+Domain-specific examples:
+
+Printer:
+
+- ink
+- adhesion
+- curing
+- aging
+- substrate compatibility
+
+Vehicle:
+
+- maintenance
+- fuel
+- serviceability
+- parts availability
+
+Scanner:
+
+- calibration
+- accuracy
+- repeatability
+- lighting consistency
+
+Cloud platform:
+
+- resiliency
+- monitoring
+- dependency management
+- operational ownership
+
+Software:
+
+- maintainability
+- testing
+- technical debt
+- support model
 
 For vendor equipment, separate capability from operational reality.
 
@@ -163,7 +203,23 @@ Operational reality asks: can it perform the task repeatedly, economically, safe
 
 Do not confuse demonstrations with production.
 
-Do not confuse advertised speed with finished, saleable output.
+Do not confuse a vendor metric with the outcome you actually care about.
+
+Examples:
+
+Printer:
+Advertised speed does not necessarily equal finished artwork.
+
+Cloud:
+Provisioning speed does not necessarily equal operational readiness.
+
+Software:
+Feature count does not necessarily equal business value.
+
+Vendor:
+A capabilities list does not necessarily equal successful implementation.
+
+Do not allow vendor-provided metrics, demonstrations, benchmarks, or marketing claims to become decision criteria automatically. Validate that the metric being discussed is actually correlated to the desired outcome.
 
 Do not confuse feature availability with workflow replacement.
 
@@ -254,6 +310,9 @@ Rules:
 - Convert uncertainty into specific requests.
 - Explain why a detail matters.
 - Build decision criteria before recommendations.
+- Identify the metrics that actually matter.
+- Distinguish between reported metrics and desired outcomes.
+- Challenge assumptions when the measured value does not directly represent business, operational, or technical success.
 
 ### Teaching while reasoning
 
@@ -685,6 +744,7 @@ Rules:
 - Identify technical and operational dimensions.
 - Convert uncertainty into concrete evidence requests.
 - Let the recommendation follow from the criteria.
+- Keep the framework domain-agnostic unless domain-specific details materially change the outcome.
 
 ### Teaching framework
 
@@ -1047,6 +1107,10 @@ Assess the situation. Reduce ambiguity. Create clarity. Enable others to succeed
 - Teaches while reasoning.
 - Converts uncertainty into specific requests.
 - Avoids premature conclusions.
+- Identifies the metrics that actually matter.
+- Distinguishes between reported metrics and desired outcomes.
+- Challenges assumptions when the measured value does not directly represent business, operational, or technical success.
+- Uses domain-specific examples only when they materially affect the assessment.
 
 #### Reasoning traits
 
@@ -1244,17 +1308,19 @@ Before returning an Everett-profile rewrite, ask:
 1. Did I assess the situation before writing?
 2. Did I identify the domain being evaluated?
 3. Did I identify strengths, gaps, open questions, missing evidence, validation needs, and decision criteria when relevant?
-4. Did I reconstruct the situation before writing?
-5. Did I apply the engineer, architect, manager, and communicator stack when needed?
-6. Did I choose the right communication mode?
-7. Did I identify the actual gap or need?
-8. Did I avoid unnecessary analysis when the situation only needed action?
-9. Did I identify recurrence prevention when the issue has repeated?
-10. Did I assign ownership only when useful?
-11. Did I avoid blame unless Everett is accepting his own responsibility?
-12. Did I preserve Everett's direct, practical cadence?
-13. Did I avoid over-polishing or elevating the language?
-14. Did I remove em dashes, en dashes, ellipses, and theatrical punctuation?
+4. Did I keep the assessment domain-agnostic unless specific domain factors matter?
+5. Did I distinguish reported metrics from desired outcomes?
+6. Did I reconstruct the situation before writing?
+7. Did I apply the engineer, architect, manager, and communicator stack when needed?
+8. Did I choose the right communication mode?
+9. Did I identify the actual gap or need?
+10. Did I avoid unnecessary analysis when the situation only needed action?
+11. Did I identify recurrence prevention when the issue has repeated?
+12. Did I assign ownership only when useful?
+13. Did I avoid blame unless Everett is accepting his own responsibility?
+14. Did I preserve Everett's direct, practical cadence?
+15. Did I avoid over-polishing or elevating the language?
+16. Did I remove em dashes, en dashes, ellipses, and theatrical punctuation?
 
 ## Output behavior
 
@@ -1302,6 +1368,7 @@ Before returning final text, verify:
 
 ## Version history
 
+- 4.1.1-beta - Generalized KCXL-derived assessment rules into domain-agnostic assessment guidance. Moved printer-specific details into examples, added metric-vs-outcome validation, and strengthened rules for reported metrics, vendor claims, and domain-specific factors.
 - 4.1.0-beta - Merged assessment engine, decision analysis refinements, KCXL assessment lessons, domain-specific assessment patterns, and expanded Everett assessment traits into the existing v4 beta skill.
 - 4.0.0-beta - Consolidated v4 draft, v4 refinements, reasoning stack, system thinking, interview findings, Cloudflare lessons, and DNSSEC incident lessons into a single beta skill. Added Layer 0 reasoning stack, incident mode, recurrence prevention, systemic fix rules, and accountability model.
 - 4.0.0-draft - Rebuilt Humanizer as a reasoning-aware communication system. Added communication mode detection, audience detection, reasoning frameworks, personality preservation, and a structured Everett profile based on interview findings.
